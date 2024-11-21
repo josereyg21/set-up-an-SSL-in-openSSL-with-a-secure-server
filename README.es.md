@@ -1,5 +1,5 @@
-#  Configurar un Servidor Seguro con SSL/TLS Utilizando OpenSSL
 <!-- hide -->
+#  Configurar un Servidor Seguro con SSL/TLS Utilizando OpenSSL
 
 > By [@rosinni](https://github.com/rosinni) and [other contributors](https://github.com/breatheco-de/set-up-an-SSL-in-openSSL-with-a-secure-server/graphs/contributors) at [4Geeks Academy](https://4geeksacademy.co/)
 
@@ -7,17 +7,13 @@
 [![build by developers](https://img.shields.io/twitter/follow/4geeksacademy?style=social&logo=twitter)](https://twitter.com/4geeksacademy)
 
 *These instructions are [available in english](https://github.com/breatheco-de/set-up-an-SSL-in-openSSL-with-a-secure-server/blob/main/README.md)*
-<!-- endhide -->
-
-
-<!-- hide -->
-
 
 ### Antes de empezar...
 
 > ¡Te necesitamos! Estos ejercicios se crean y mantienen en colaboración con personas como tú. Si encuentras algún error o falta de ortografía, contribuye y/o repórtalo.
-
 <!-- endhide -->
+
+<onlyfor saas="true" withBanner="true">
 
 ## 🌱 ¿Cómo empezar este proyecto?
 
@@ -27,6 +23,7 @@ Este ejercicio tiene como objetivo enseñar a los estudiantes a configurar un se
 
 * Una máquina virtual Debian instalada en VirtualBox. (usaremos la máquina previamente configurada en clases anteriores).
 
+</onlyfor>
 
 ## 📝 Instrucciones
 
