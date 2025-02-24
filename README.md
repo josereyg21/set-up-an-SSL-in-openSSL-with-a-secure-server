@@ -14,8 +14,6 @@
 
 <!-- endhide -->
 
-<onlyfor saas="false" withBanner="false">
-
 ## 🌱 How to start this project?
 
 This exercise aims to teach students how to set up a secure server using OpenSSL to provide secure communications via SSL/TLS.
@@ -23,8 +21,6 @@ This exercise aims to teach students how to set up a secure server using OpenSSL
 ### Requirements
 
 * A Debian virtual machine installed in VirtualBox. (we will use the previously configured machine in previous classes).
-
-</onlyfor>
 
 ## 📝 Instructions
 
