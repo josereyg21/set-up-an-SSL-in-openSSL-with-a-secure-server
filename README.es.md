@@ -13,8 +13,6 @@
 > ¡Te necesitamos! Estos ejercicios se crean y mantienen en colaboración con personas como tú. Si encuentras algún error o falta de ortografía, contribuye y/o repórtalo.
 <!-- endhide -->
 
-<onlyfor saas="false" withBanner="false">
-
 ## 🌱 ¿Cómo empezar este proyecto?
 
 Este ejercicio tiene como objetivo enseñar a los estudiantes a configurar un servidor seguro utilizando OpenSSL para proporcionar comunicaciones seguras mediante SSL/TLS.
@@ -22,8 +20,6 @@ Este ejercicio tiene como objetivo enseñar a los estudiantes a configurar un se
 ### Requisitos
 
 * Una máquina virtual Debian instalada en VirtualBox. (usaremos la máquina previamente configurada en clases anteriores).
-
-</onlyfor>
 
 ## 📝 Instrucciones
 
