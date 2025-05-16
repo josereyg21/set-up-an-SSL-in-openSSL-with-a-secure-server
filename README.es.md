@@ -132,7 +132,7 @@ Un nuevo repositorio se creará en tu cuenta.
 ### Paso 6: Probar la Conexión:
 - [ ] Abre un navegador web e ingresa la URL https://mi-dominio.com. Deberías ver una advertencia de seguridad debido al certificado autofirmado. Acepta el riesgo y continúa para ver la página predeterminada de Apache servida a través de HTTPS.
 
-![mi-dominio.com](https://github.com/breatheco-de/set-up-an-SSL-in-openSSL-with-a-secure-server/blob/main/assets/https.png?raw=true)
+![mi-dominio.com](https://github.com/breatheco-de/set-up-an-SSL-in-openSSL-with-a-secure-server/blob/main/assets/https.png)
 
 
 > 💡 NOTA: Para los efectos de este ejercicio educativo, si bien el uso de localhost con HTTPS (https://localhost/) es suficiente para demostrar la configuración básica de SSL/TLS utilizando OpenSSL, incluir la configuración de un dominio personalizado como mi-dominio.com proporciona un aprendizaje más completo y práctico. Este paso adicional permite entender cómo funciona la resolución de DNS en un entorno real. Al generar el certificado SSL/TLS, es crucial que el nombre de dominio (Common Name) coincida con el dominio utilizado para acceder al servidor, evitando así errores y advertencias de seguridad en los navegadores. Esto refuerza la comprensión de conceptos esenciales y mejora las habilidades prácticas necesarias para manejar configuraciones de SSL/TLS en un entorno profesional.
