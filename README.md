@@ -78,7 +78,7 @@ A new repository will be created in your account.
 
 - [ ] Ensure the file contains the following:
 
-```sh
+  ```sh
       <IfModule mod_ssl.c>
           <VirtualHost _default_:443>
               ServerAdmin admin@mi-dominio.com
@@ -105,7 +105,7 @@ A new repository will be created in your account.
 
           </VirtualHost>
       </IfModule>
-```
+  ```
 ### Step 4: Enable SSL Site and SSL Module:
 - [ ] Use the following commands:
 
