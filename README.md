@@ -128,7 +128,7 @@ A new repository will be created in your account.
 ### Step 6: Test the Connection:
 - [ ] Open a web browser and enter the URL https://mi-dominio.com. You should see a security warning due to the self-signed certificate. Accept the risk and continue to view the default Apache page served via HTTPS.
 
-![mi-dominio.com](assets/https.png)
+![mi-dominio.com](https://github.com/breatheco-de/set-up-an-SSL-in-openSSL-with-a-secure-server/blob/main/assets/https.png)
 
 
 > 💡 NOTE: For the purpose of this educational exercise, while using localhost with HTTPS (https://localhost/) suffices to demonstrate basic SSL/TLS configuration using OpenSSL, including the setup of a custom domain like mi-dominio.com provides a more comprehensive and practical learning experience. This additional step allows understanding of how DNS resolution works in a real environment. When generating the SSL/TLS certificate, it is crucial that the Common Name matches the domain used to access the server, thus avoiding security warnings and errors in web browsers. This reinforces understanding of essential concepts and enhances practical skills necessary for handling SSL/TLS configurations in a professional environment.
