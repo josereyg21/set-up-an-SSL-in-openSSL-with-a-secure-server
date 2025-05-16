@@ -51,8 +51,7 @@ Un nuevo repositorio se creará en tu cuenta.
     ```sh
     openssl req -new -key /etc/ssl/private/myserver.key -out /etc/ssl/certs/myserver.csr
     ```
-**Durante el proceso, se te pedirá que ingreses información sobre tu organización.** 
-   (Aquí hay un ejemplo de cómo puedes completarlo):
+**Durante el proceso, se te pedirá que ingreses información sobre tu organización.** (Aquí hay un ejemplo de cómo puedes completarlo):
   * Country Name (2 letter code): ES
   * State or Province Name (full name): Madrid
   * Locality Name (eg, city): Madrid
