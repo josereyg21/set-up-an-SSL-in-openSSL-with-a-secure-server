@@ -110,7 +110,7 @@ Un nuevo repositorio se creará en tu cuenta.
 ### Paso 4: Habilitar el Sitio SSL y el Módulo SSL:
 - [ ] Utiliza los siguientes comandos:
 
-    ```sh
+    ```bash
     sudo a2enmod ssl
     sudo a2ensite default-ssl
     ```
