@@ -65,7 +65,6 @@ Un nuevo repositorio se creará en tu cuenta.
 
 ### Paso 2: Firmar el CSR para Obtener un Certificado Autofirmado:
 - [ ] Para propósitos de esta práctica, firmaremos el CSR con nuestra propia clave privada para obtener un certificado autofirmado, utiliza el siguiente comando (Esto generará un certificado autofirmado válido por 365 días):
-
     ```sh
     openssl x509 -req -days 365 -in /etc/ssl/certs/myserver.csr -signkey /etc/ssl/private/myserver.key -out /etc/ssl/certs/myserver.crt
     ```
