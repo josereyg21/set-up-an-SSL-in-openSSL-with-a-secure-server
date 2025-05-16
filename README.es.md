@@ -71,13 +71,11 @@ Un nuevo repositorio se creará en tu cuenta.
 
 ### Paso 3: Configurar Apache para Usar el Certificado SSL:
 - [ ] Verifica el archivo de configuración SSL de Apache:
-
     ```sh
     sudo nano /etc/apache2/sites-available/default-ssl.conf
     ```
 
 - [ ] Asegúrate de que el archivo contenga lo siguiente:
-
       ```sh
       <IfModule mod_ssl.c>
           <VirtualHost _default_:443>
@@ -108,26 +106,21 @@ Un nuevo repositorio se creará en tu cuenta.
       ```
 ### Paso 4: Habilitar el Sitio SSL y el Módulo SSL:
 - [ ] Utiliza los siguientes comandos:
-
-    ```bash
+    ```sh
     sudo a2enmod ssl
     sudo a2ensite default-ssl
     ```
 ### Paso 5: Actualizar el Archivo Hosts:
 - [ ] Verifica el archivo /etc/hosts en tu máquina local (desde donde accedes a la máquina virtual) para asegurar que mi-dominio.com se resuelva a 127.0.0.1
-
     ```sh
     sudo nano /etc/hosts
     ```
   > 💡 Asegúrate de Agregar la línea:
     * 127.0.0.1 mi-dominio.com
 
-<!-- ### Paso 7: Reiniciar la Máquina Virtual: -->
 - [ ] Reinicia la máquina virtual para aplicar todos los cambios
 
-   <!-- ```sh
-   sudo reboot
-   ``` -->
+ 
 ### Paso 6: Probar la Conexión:
 - [ ] Abre un navegador web e ingresa la URL https://mi-dominio.com. Deberías ver una advertencia de seguridad debido al certificado autofirmado. Acepta el riesgo y continúa para ver la página predeterminada de Apache servida a través de HTTPS.
 
@@ -143,16 +136,14 @@ Hemos desarrollado un script para ayudarte a medir tu éxito durante este proyec
 - [ ] En la carpeta `./assets` encontraras el script [check_ssl.sh](https://github.com/breatheco-de/set-up-an-SSL-in-openSSL-with-a-secure-server/blob/main/assets/check_ssl.sh) que deberás copiar y pegar en el escritorio de tu máquina virtual de Debian.
 
 - [ ] Una vez pegado el script [check_ssl.sh](https://github.com/breatheco-de/set-up-an-SSL-in-openSSL-with-a-secure-server/blob/main/assets/check_ssl.sh) en tu maquina Debian, abre la terminal y navega al directorio donde se encuentra el script, en nuestro caso `./Escritorio` y haz que el script sea ejecutable (si aún no lo es). Esto se puede hacer usando el comando `chmod`:
-
-```sh
-chmod +x check_ssl.sh
-```
+  ```sh
+  chmod +x check_ssl.sh
+  ```
 
 - [ ] Ejecuta el script especificando su nombre. También pueden proporcionar cualquier argumento necesario. Asumiendo que no se necesitan argumentos adicionales para este ejemplo, deben ejecutar:
-
-```sh
-./check-rules.sh
-```
+  ```sh
+  ./check-rules.sh
+  ```
 
 - [ ] **Carga tus resultados.** La ejecucion del script te creara un archivo `report.json` que deberas copiar y pegarlo en la raíz de este proyecto. 
 
