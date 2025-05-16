@@ -47,7 +47,6 @@ Un nuevo repositorio se creará en tu cuenta.
     ```
 > 💡Asegúrate de proteger esta clave privada adecuadamente.
 
-<!-- ### Paso 2: Generar una Solicitud de Firma de Certificado (CSR): -->
 - [ ] Utiliza el siguiente comando para generar un CSR que contendrá la información pública que se incluirá en el certificado:
     ```sh
     openssl req -new -key /etc/ssl/private/myserver.key -out /etc/ssl/certs/myserver.csr
