@@ -65,9 +65,9 @@ A new repository will be created in your account.
 ### Step 2: Sign the CSR to Obtain a Self-Signed Certificate:
 - [ ] For the purpose of this practice, sign the CSR with your own private key to obtain a self-signed certificate valid for 365 days. Use the following command:
 
-    ```sh
-    openssl x509 -req -days 365 -in /etc/ssl/certs/myserver.csr -signkey /etc/ssl/private/myserver.key -out /etc/ssl/certs/myserver.crt
-    ```
+ ```sh
+ openssl x509 -req -days 365 -in /etc/ssl/certs/myserver.csr -signkey /etc/ssl/private/myserver.key -out /etc/ssl/certs/myserver.crt
+ ```
 
 ### Step 3: Configure Apache to Use the SSL Certificate:
 - [ ] Verify the Apache SSL configuration file:
