@@ -75,7 +75,7 @@ Un nuevo repositorio se creará en tu cuenta.
     ```
 
 - [ ] Asegúrate de que el archivo contenga lo siguiente:
-      ```sh
+    ```sh
       <IfModule mod_ssl.c>
           <VirtualHost _default_:443>
               ServerAdmin admin@mi-dominio.com
@@ -102,7 +102,7 @@ Un nuevo repositorio se creará en tu cuenta.
 
           </VirtualHost>
       </IfModule>
-      ```
+    ```
 ### Paso 4: Habilitar el Sitio SSL y el Módulo SSL:
 - [ ] Utiliza los siguientes comandos:
     ```sh

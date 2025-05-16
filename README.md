@@ -44,10 +44,7 @@ A new repository will be created in your account.
     ```
 > 💡Make sure to protect this private key properly.
 
-<!-- ### Step 2: Generate a Certificate Signing Request (CSR): -->
-
 - [ ] Use the following command to generate a CSR that will contain public information included in the certificate:
-
     ```sh
     openssl req -new -key /etc/ssl/private/myserver.key -out /etc/ssl/certs/myserver.csr
     ```
@@ -64,63 +61,57 @@ A new repository will be created in your account.
 
 ### Step 2: Sign the CSR to Obtain a Self-Signed Certificate:
 - [ ] For the purpose of this practice, sign the CSR with your own private key to obtain a self-signed certificate valid for 365 days. Use the following command:
-
- ```sh
- openssl x509 -req -days 365 -in /etc/ssl/certs/myserver.csr -signkey /etc/ssl/private/myserver.key -out /etc/ssl/certs/myserver.crt
- ```
+    ```sh
+    openssl x509 -req -days 365 -in /etc/ssl/certs/myserver.csr -signkey /etc/ssl/private/myserver.key -out /etc/ssl/certs/myserver.crt
+    ```
 
 ### Step 3: Configure Apache to Use the SSL Certificate:
 - [ ] Verify the Apache SSL configuration file:
-
     ```sh
     sudo nano /etc/apache2/sites-available/default-ssl.conf
     ```
 
 - [ ] Ensure the file contains the following:
+    ```sh
+        <IfModule mod_ssl.c>
+            <VirtualHost _default_:443>
+                ServerAdmin admin@mi-dominio.com
+                ServerName mi-dominio.com
 
-  ```sh
-      <IfModule mod_ssl.c>
-          <VirtualHost _default_:443>
-              ServerAdmin admin@mi-dominio.com
-              ServerName mi-dominio.com
+                DocumentRoot /var/www/html
 
-              DocumentRoot /var/www/html
+                SSLEngine on
+                SSLCertificateFile /etc/ssl/certs/myserver.crt
+                SSLCertificateKeyFile /etc/ssl/private/myserver.key
 
-              SSLEngine on
-              SSLCertificateFile /etc/ssl/certs/myserver.crt
-              SSLCertificateKeyFile /etc/ssl/private/myserver.key
+                <FilesMatch "\.(cgi|shtml|phtml|php)$">
+                    SSLOptions +StdEnvVars
+                </FilesMatch>
+                <Directory /usr/lib/cgi-bin>
+                    SSLOptions +StdEnvVars
+                </Directory>
 
-              <FilesMatch "\.(cgi|shtml|phtml|php)$">
-                  SSLOptions +StdEnvVars
-              </FilesMatch>
-              <Directory /usr/lib/cgi-bin>
-                  SSLOptions +StdEnvVars
-              </Directory>
+                BrowserMatch "MSIE [2-6]" \
+                    nokeepalive ssl-unclean-shutdown \
+                    downgrade-1.0 force-response-1.0
 
-              BrowserMatch "MSIE [2-6]" \
-                  nokeepalive ssl-unclean-shutdown \
-                  downgrade-1.0 force-response-1.0
+                BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
 
-              BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
-
-          </VirtualHost>
-      </IfModule>
-  ```
+            </VirtualHost>
+        </IfModule>
+    ```
 ### Step 4: Enable SSL Site and SSL Module:
 - [ ] Use the following commands:
-
     ```sh
     sudo a2enmod ssl
     sudo a2ensite default-ssl
     ```
 ### Step 5: Update the Hosts File:
 - [ ] Verify the /etc/hosts file on your local machine (from where you access the virtual machine) to ensure mi-dominio.com resolves to 127.0.0.1:
-
     ```sh
     sudo nano /etc/hosts
     ```
-  > 💡 Make sure to add the line:
-    * 127.0.0.1 mi-dominio.com
+  > 💡 Make sure to add the line: * 127.0.0.1 mi-dominio.com
 
 - [ ]  Restart the virtual machine to apply all changes
 
@@ -140,15 +131,13 @@ We have developed a script to help you measure your success during this project.
 - [ ] In the ./assets folder, you will find the script check_ssl.sh which you should copy and paste onto the desktop of your Debian virtual machine.
 
 - [ ] Once you have pasted the script check_ssl.sh onto your Debian machine, open the terminal and navigate to the directory where the script is located, in our case ./Desktop, and make the script executable (if it is not already). This can be done using the chmod command:
-
-```sh
-chmod +x check_ssl.sh
-```
+    ```sh
+    chmod +x check_ssl.sh
+    ```
 
 - [ ] Run the script by specifying its name. You may also need to provide any necessary arguments. Assuming no additional arguments are needed for this example, you should run:
-
-```sh
-./check-rules.sh
-```
+    ```sh
+    ./check-rules.sh
+    ```
 
 - [ ] Upload your results. Running the script will create a report.json file, which you should copy and paste into the root of this project.
