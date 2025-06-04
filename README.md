@@ -137,7 +137,7 @@ We have developed a script to help you measure your success during this project.
 
 - [ ] Run the script by specifying its name. You may also need to provide any necessary arguments. Assuming no additional arguments are needed for this example, you should run:
     ```sh
-    ./check-rules.sh
+    ./check-ssl.sh
     ```
 
 - [ ] Upload your results. Running the script will create a report.json file, which you should copy and paste into the root of this project.
