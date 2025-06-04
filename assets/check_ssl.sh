@@ -1,80 +1,76 @@
+
 #!/bin/bash
 
-# Define the file paths
-KEY_FILE="/etc/ssl/private/myserver.key"
-CERT_FILE="/etc/ssl/certs/myserver.crt"
-APACHE_SSL_CONF="/etc/apache2/sites-available/default-ssl.conf"
-REPORT_FILE="report.json"
-
-# Variables for the report
+# Output file
+REPORT="report.json"
 report=()
 
-# Function to check the existence of files
-check_files() {
-    if [[ ! -f "$KEY_FILE" ]]; then
-        report+=("{\"step\": \"check_files\", \"result\": \"failure\", \"message\": \"Clave privada no encontrada en $KEY_FILE\"}")
-        return 1
-    fi
-
-    if [[ ! -f "$CERT_FILE" ]]; then
-        report+=("{\"step\": \"check_files\", \"result\": \"failure\", \"message\": \"Certificado no encontrado en $CERT_FILE\"}")
-        return 1
-    fi
-
-    report+=("{\"step\": \"check_files\", \"result\": \"success\", \"message\": \"Archivos de clave privada y certificado encontrados.\"}")
-    return 0
+# Helper function to add key-value pairs to the report
+add_report() {
+    key="$1"
+    value="$2"
+    report+=("\"$key\": \"$value\"")
 }
 
-# Function to check the validity of the certificate
-check_certificate() {
-    openssl x509 -in "$CERT_FILE" -noout -text > /dev/null 2>&1
-    if [[ $? -ne 0 ]]; then
-        report+=("{\"step\": \"check_certificate\", \"result\": \"failure\", \"message\": \"El certificado en $CERT_FILE no es válido.\"}")
-        return 1
-    fi
+# 1. Check if Apache is running
+if systemctl is-active --quiet apache2; then
+    add_report "Apache Service" "Apache is running."
+else
+    add_report "Apache Service" "❌ Apache is NOT running. Please start it with: sudo systemctl start apache2"
+fi
 
-    report+=("{\"step\": \"check_certificate\", \"result\": \"success\", \"message\": \"El certificado es válido.\"}")
-    return 0
-}
+# 2. Check if the SSL module is enabled
+if apache2ctl -M | grep -q ssl_module; then
+    add_report "SSL Module" "The SSL module is enabled."
+else
+    add_report "SSL Module" "❌ The SSL module is NOT enabled. Please enable it with: sudo a2enmod ssl && sudo systemctl restart apache2"
+fi
 
-# Function to check the Apache SSL configuration
-check_apache_config() {
-    if grep -q "SSLEngine on" "$APACHE_SSL_CONF" && \
-       grep -q "SSLCertificateFile $CERT_FILE" "$APACHE_SSL_CONF" && \
-       grep -q "SSLCertificateKeyFile $KEY_FILE" "$APACHE_SSL_CONF"; then
-        report+=("{\"step\": \"check_apache_config\", \"result\": \"success\", \"message\": \"La configuración de Apache SSL es correcta.\"}")
-        return 0
-    else
-        report+=("{\"step\": \"check_apache_config\", \"result\": \"failure\", \"message\": \"La configuración de Apache SSL no es correcta.\"}")
-        return 1
-    fi
-}
+# 3. Search for certificate and key files in active virtual hosts
+CRT_PATH=""
+KEY_PATH=""
 
-
-# Execute the verification functions
-check_files
-check_files_result=$?
-
-check_certificate
-check_certificate_result=$?
-
-check_apache_config
-check_apache_config_result=$?
-
-
-# Generate the JSON report
-echo "[" > $REPORT_FILE
-for i in "${!report[@]}"; do
-    echo "  ${report[$i]}" >> $REPORT_FILE
-    if [[ $i -lt $(( ${#report[@]} - 1 )) ]]; then
-        echo "," >> $REPORT_FILE
+for conf in /etc/apache2/sites-enabled/*.conf; do
+    crt=$(grep -i "SSLCertificateFile" "$conf" | awk '{print $2}')
+    key=$(grep -i "SSLCertificateKeyFile" "$conf" | awk '{print $2}')
+    
+    if [[ -f "$crt" && -f "$key" ]]; then
+        CRT_PATH="$crt"
+        KEY_PATH="$key"
+        break
     fi
 done
-echo "]" >> $REPORT_FILE
 
-# Show the overall result
-if [[ $check_files_result -eq 0 && $check_certificate_result -eq 0 && $check_apache_config_result -eq 0 ]]; then
-    echo "La configuración SSL con OpenSSL ha sido verificada correctamente."
+if [[ -n "$CRT_PATH" ]]; then
+    add_report "Certificate File" "Found certificate at $CRT_PATH"
 else
-    echo "Hubo errores en la verificación de la configuración SSL con OpenSSL. Revisa el reporte en $REPORT_FILE para más detalles."
+    add_report "Certificate File" "❌ No certificate file found. Please check your Apache SSL configuration."
 fi
+
+if [[ -n "$KEY_PATH" ]]; then
+    add_report "Key File" "Found private key at $KEY_PATH"
+else
+    add_report "Key File" "❌ No private key file found. Please check your Apache SSL configuration."
+fi
+
+# 4. Validate the certificate using OpenSSL
+if [[ -n "$CRT_PATH" && -f "$CRT_PATH" ]]; then
+    CN=$(openssl x509 -in "$CRT_PATH" -noout -subject | sed -n 's/.*CN *= *//p')
+    EXPIRE_DATE=$(openssl x509 -in "$CRT_PATH" -noout -enddate | cut -d= -f2)
+    EXPIRE_SECONDS=$(date --date="$EXPIRE_DATE" +%s)
+    NOW_SECONDS=$(date +%s)
+    DAYS_LEFT=$(( (EXPIRE_SECONDS - NOW_SECONDS) / 86400 ))
+
+    if [[ $DAYS_LEFT -gt 0 ]]; then
+        add_report "Certificate Validity" "Valid certificate. Common Name (CN): $CN"
+        add_report "Days Until Expiry" "The certificate will expire in $DAYS_LEFT days."
+    else
+        add_report "Certificate Validity" "❌ The certificate has expired. Please generate a new one."
+    fi
+else
+    add_report "Certificate Validity" "❌ Cannot verify the certificate. File not found or invalid format."
+fi
+
+# 5. Generate JSON report
+echo -e "{\n$(IFS=,; echo "  ${report[*]}")\n}" > "$REPORT"
+echo "Validation complete. Check the file: $REPORT"
